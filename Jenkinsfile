@@ -1,22 +1,9 @@
 pipeline {
     agent any
-
-    environment {
-        GIT_REPO = "https://github.com/mansikanjaria/python-app.git"
-    }
-
     stages {
-        stage('Manual Git Checkout') {
+        stage('Checkout') {
             steps {
-                sh 'rm -rf python-app || true'
-                sh 'git clone $GIT_REPO'
-                sh 'ls -la python-app'
-            }
-        }
-
-        stage('Run Python') {
-            steps {
-                sh 'cd python-app && python3 app.py'
+                git url: 'https://github.com/mansikanjaria/python-app.git', branch: 'main'
             }
         }
     }
