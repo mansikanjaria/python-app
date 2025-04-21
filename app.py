@@ -1,6 +1,7 @@
+import os
+
 def main():
-    print("Welcome to App!")
-    name = input("Enter your name: ")
+    name = os.getenv("USERNAME", "Guest")
     print(f"Hello, {name}!")
 
 if __name__ == "__main__":
