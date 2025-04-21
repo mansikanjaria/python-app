@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/mansikanjaria/python-app.git', branch: 'main'
+                script {
+                    checkout scm
+                    sh 'git config remote.origin.url https://github.com/mansikanjaria/python-app.git'
+                }
             }
         }
     }
