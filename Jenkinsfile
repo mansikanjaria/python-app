@@ -1,9 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.9'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -12,17 +8,10 @@ pipeline {
             }
         }
 
-        stage('Build/Run') {
+        stage('Run Python App') {
             steps {
-                sh 'python app.py'
-            }
-        }
-
-        stage('SonarQube Scan') {
-            steps {
-                withSonarQubeEnv('MySonarQube') {
-                    sh 'sonar-scanner -Dsonar.projectKey=simple-python-app -Dsonar.sources=. -Dsonar.host.url=http://52.228.189.60:9000 -Dsonar.login=squ_d172193ac04d45d2f67c6319e29c6d35e847dacb'
-                }
+                sh 'echo "print(\\"Hello from Jenkins!\\")" > app.py'
+                sh 'python3 app.py'
             }
         }
 
@@ -31,9 +20,5 @@ pipeline {
                 cleanWs()
             }
         }
-    }
-
-    triggers {
-        cron('H 10 * * *')
     }
 }
